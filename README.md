@@ -52,7 +52,19 @@ Study smarter with AI help:
 ---
 
 ## 🖼️ Screenshots
+### 🧠 Focus Mode  
+![Focus Mode](./screenshots/focus-mode.png)
 
+### 📊 Analytics Dashboard  
+![Analytics](./screenshots/analytics.png)
+
+### 🔥 Streak Calendar  
+![Streak Calendar](./screenshots/streak-calendar.png)
+
+### 📓 Journal Page  
+![Journal](./screenshots/journal.png)
+
+---
 
 ## 🛠️ Installation & Setup
 
