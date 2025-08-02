@@ -13,6 +13,7 @@ import {
   Title,
 } from "chart.js";
 import { format, parseISO } from "date-fns";
+import StreakCalendar from "../components/StreakCalendar";
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +25,6 @@ ChartJS.register(
   Legend,
   Title
 );
-import StreakCalendar from "../components/StreakCalendar";
 
 const Analytics = () => {
   const [sessionData, setSessionData] = useState([]);
@@ -34,11 +34,6 @@ const Analytics = () => {
   useEffect(() => {
     fetchAnalytics();
   }, []);
-
-  useEffect(() => {
-  console.log("Fetched sessionData:", sessionData);
-}, [sessionData]);
-
 
   const fetchAnalytics = async () => {
     try {
@@ -67,7 +62,7 @@ const Analytics = () => {
     labels: cleanedData.map((d) => d.label),
     datasets: [
       {
-        label: "Focus Time (in seconds)",
+        label: "Focus Time (seconds)",
         data: cleanedData.map((d) => d.value),
         fill: false,
         borderColor: "#3b82f6",
@@ -83,7 +78,6 @@ const Analytics = () => {
     responsive: true,
     plugins: {
       legend: { display: true, position: "top" },
-      title: { display: false },
       tooltip: {
         callbacks: {
           label: (context) => `${context.parsed.y} sec`,
@@ -93,10 +87,7 @@ const Analytics = () => {
     scales: {
       x: {
         grid: { display: false },
-        ticks: {
-          color: "#374151",
-          font: { weight: "bold" },
-        },
+        ticks: { color: "#4b5563", font: { weight: "bold" } },
       },
       y: {
         beginAtZero: true,
@@ -116,8 +107,16 @@ const Analytics = () => {
       {
         label: "Distraction Time (sec)",
         data: Object.values(distractionData),
-        backgroundColor: ["#ef4444", "#f59e0b", "#10b981", "#6366f1"],
-        borderWidth: 1,
+        backgroundColor: [
+          "#ef4444", // red-500
+          "#f97316", // orange-500
+          "#22c55e", // green-500
+          "#6366f1", // indigo-500
+          "#14b8a6", // teal-500
+          "#a855f7", // purple-500
+        ],
+        borderWidth: 2,
+        borderColor: "#ffffff",
       },
     ],
   };
@@ -125,7 +124,7 @@ const Analytics = () => {
   const pieChartOptions = {
     responsive: true,
     plugins: {
-      legend: { position: "bottom" },
+      legend: { position: "bottom", labels: { color: "#4b5563" } },
       tooltip: {
         callbacks: {
           label: (context) => `${context.label}: ${context.parsed} sec`,
@@ -135,46 +134,72 @@ const Analytics = () => {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
-      <h2 className="text-3xl font-bold text-gray-800 mb-2">📊 Focus Analytics Dashboard</h2>
+    <main className="min-h-screen bg-gradient-to-tr from-sky-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 px-4 py-12">
+      <div className="max-w-7xl mx-auto space-y-12">
 
-      {/* Line Chart */}
-      <div className="bg-white rounded-lg shadow p-4">
-        <h3 className="text-lg font-semibold text-blue-600 mb-4">
-          📆 Focus Trend (Last 7 Days)
-        </h3>
-        {cleanedData.length > 0 ? (
-          <Line data={lineChartData} options={lineChartOptions} />
-        ) : (
-          <p className="text-gray-500">No data available for the past 7 days.</p>
-        )}
-      </div>
+        {/* Header */}
+        <header className="text-center">
+          <h1 className="text-4xl font-extrabold text-gray-800 dark:text-white">
+            📊 Focus Analytics
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">
+            Visualize your productivity trends and habits
+          </p>
+        </header>
 
-      {/* Pie Chart */}
-      <div className="bg-white rounded-lg shadow p-4 max-w-md mx-auto">
-        <h3 className="text-lg font-semibold text-rose-600 mb-4">🚫 Distraction Breakdown</h3>
-        <div className="max-w-xs mx-auto">
-          {Object.keys(distractionData).length > 0 ? (
-            <Pie data={pieChartData} options={pieChartOptions} />
+        {/* Line Chart */}
+        <section className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-6">
+            📈 Focus Trend (Last 7 Days)
+          </h2>
+          {cleanedData.length > 0 ? (
+            <Line data={lineChartData} options={lineChartOptions} />
           ) : (
-            <p className="text-gray-500">No distraction data available.</p>
+            <p className="text-center text-gray-500 dark:text-gray-400">
+              No data available for the past 7 days.
+            </p>
           )}
-        </div>
+        </section>
+
+        {/* Pie Chart */}
+        <section className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl p-8 max-w-3xl mx-auto">
+          <h2 className="text-2xl font-semibold text-rose-600 dark:text-rose-400 mb-6 text-center">
+            🚫 Distraction Breakdown
+          </h2>
+          <div className="max-w-md mx-auto">
+            {Object.keys(distractionData).length > 0 ? (
+              <Pie data={pieChartData} options={pieChartOptions} />
+            ) : (
+              <p className="text-center text-gray-500 dark:text-gray-400">
+                No distraction data available.
+              </p>
+            )}
+          </div>
+        </section>
+
+        {/* Streak Calendar */}
+        <section className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-emerald-600 dark:text-emerald-400 mb-6">
+            🔥 Focus Streaks
+          </h2>
+          <StreakCalendar />
+        </section>
+
+        {/* Insights */}
+        <section className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-purple-600 dark:text-purple-400 mb-4">
+            🔍 Peak Focus Insights
+          </h2>
+          <p className="text-gray-700 dark:text-gray-300 text-lg">
+            ⏰ <strong>Peak Focus Time:</strong>{" "}
+            <span className="font-medium text-indigo-600 dark:text-indigo-300">
+              {peakTime}
+            </span>
+          </p>
+        </section>
+
       </div>
-
-
-      <StreakCalendar />
-
-
-      {/* Insights */}
-      <div className="bg-white rounded-lg shadow p-4">
-        <h3 className="text-lg font-semibold text-purple-600 mb-2">🔍 Focus Insights</h3>
-        <p className="text-md">
-          ⏰ <strong>Peak Focus Time:</strong>{" "}
-          <span className="text-gray-700">{peakTime}</span>
-        </p>
-      </div>
-    </div>
+    </main>
   );
 };
 

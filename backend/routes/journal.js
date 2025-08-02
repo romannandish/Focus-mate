@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer vZodwx9DUzsqFyq8xVo3v422AjAxRCvDLODAsyit`, // your key
+          Authorization: `Bearer ${process.env.COHERE_API_KEY}`, // your key
           "Content-Type": "application/json",
         },
       }

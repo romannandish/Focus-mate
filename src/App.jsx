@@ -9,6 +9,7 @@ import FocusPage from "./pages/FocusPage";
 import Analytics from "./pages/Analytics"; // ✅ ADD THIS
 import JournalPage from "./pages/JournalPage";
 import AIAssistantPage from "./pages/AIAssistantPage"; // ✅ ADD THIS
+import Footer from "./components/Footer"; 
 
 function ProtectedRoute({ children }) {
   const { isLoggedIn, loading } = useAuth();
@@ -94,6 +95,7 @@ function App() {
         
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
+      <Footer />
     </>
   );
 }

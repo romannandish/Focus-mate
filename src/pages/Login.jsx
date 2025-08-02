@@ -1,8 +1,9 @@
 // src/pages/Login.jsx
 import React, { useState } from "react";
-import axios from "../utils/api"; // or use axios directly
+import axios from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Lock, User } from "lucide-react";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post("/login", { username, password });
-      login(res.data.token); // set context + localStorage
+      login(res.data.token);
       alert("Login successful!");
       navigate("/dashboard");
     } catch (err) {
@@ -23,41 +24,64 @@ function Login() {
   };
 
   return (
-    <form
-      onSubmit={handleLogin}
-      className="bg-white p-6 rounded-xl shadow-md space-y-4 w-96 mx-auto mt-20"
-    >
-      <h2 className="text-2xl font-bold text-center">Login</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        className="w-full p-2 border rounded"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        className="w-full p-2 border rounded"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button
-        type="submit"
-        className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-zinc-900 dark:to-gray-800 px-4">
+      <form
+        onSubmit={handleLogin}
+        className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl p-8 w-full max-w-md space-y-6 border dark:border-zinc-700"
       >
-        Login
-      </button>
-      <p className="text-center">
-        Don't have an account?{" "}
-        <span
-          className="text-green-500 cursor-pointer"
-          onClick={() => navigate("/register")}
+        <h2 className="text-3xl font-extrabold text-center text-gray-800 dark:text-white">
+          Welcome Back
+        </h2>
+        <p className="text-sm text-center text-gray-500 dark:text-gray-400">
+          Login to access your dashboard
+        </p>
+
+        <div className="space-y-4">
+          <div className="flex items-center border dark:border-zinc-700 rounded-lg overflow-hidden bg-gray-50 dark:bg-zinc-800">
+            <span className="px-3 text-gray-400">
+              <User size={18} />
+            </span>
+            <input
+              type="text"
+              placeholder="Username"
+              className="w-full px-3 py-2 bg-transparent outline-none text-gray-800 dark:text-white"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+
+          <div className="flex items-center border dark:border-zinc-700 rounded-lg overflow-hidden bg-gray-50 dark:bg-zinc-800">
+            <span className="px-3 text-gray-400">
+              <Lock size={18} />
+            </span>
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full px-3 py-2 bg-transparent outline-none text-gray-800 dark:text-white"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white py-2 rounded-xl font-semibold transition-all shadow-md hover:shadow-lg"
         >
-          Register
-        </span>
-      </p>
-    </form>
+          Login
+        </button>
+
+        <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+          Don't have an account?{' '}
+          <span
+            className="text-green-600 hover:underline cursor-pointer"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </span>
+        </p>
+      </form>
+    </main>
   );
 }
 
