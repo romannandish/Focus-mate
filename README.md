@@ -53,10 +53,6 @@ Study smarter with AI help:
 
 ## 🖼️ Screenshots
 
-![Focus Mode](./screenshots/focus-mode.png)
-![Analytics Page](./screenshots/analytics.png)
-![Streak Calendar](./screenshots/streak-calendar.png)
-
 
 ## 🛠️ Installation & Setup
 
