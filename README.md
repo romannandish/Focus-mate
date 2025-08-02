@@ -6,12 +6,6 @@ SmartEdu is a full-stack MERN (MongoDB, Express, React, Node.js) application des
 
 ---
 
-## 🚀 Live Demo
-
-👉 Coming soon: [https://smartedu.vercel.app](https://smartedu.vercel.app)
-
----
-
 ## ✨ Features
 
 ### 🎯 Focus Mode  
