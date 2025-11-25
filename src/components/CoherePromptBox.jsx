@@ -36,12 +36,12 @@ const CoherePromptBox = () => {
         "https://api.cohere.ai/v1/chat",
         {
           message: prompt,
-          model: "command-r-plus",
+          model: "command-r-plus-08-2024",
           chat_history: [],
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.COHERE_API_KEY}`,
+            Authorization: `Bearer suTpYlwD0dv2woDV1v5GAiuuexgAcva6b5GNC42V`,
             "Content-Type": "application/json",
           },
         }
